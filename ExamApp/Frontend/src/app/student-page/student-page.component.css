@@ -1,0 +1,47 @@
+.student-container {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.questions-panel {
+  flex: 2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1rem;
+  background: #fafafa;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.result-panel {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1rem;
+  background: #fff;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.questions-panel h2,
+.result-panel h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.questions-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.questions-panel li {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.questions-panel li:last-child {
+  border-bottom: none;
+}

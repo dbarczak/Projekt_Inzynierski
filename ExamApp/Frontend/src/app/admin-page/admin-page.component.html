@@ -1,0 +1,168 @@
+<div class="admin-container">
+  <section class="panel questions-panel">
+    <h2 *ngIf="!showSet">
+      Pytania (blok {{ selectedBlock || '-' }})
+    </h2>
+    <h2 *ngIf="showSet">
+      Szczegóły zestawu: {{ setDetails?.name }}
+    </h2>
+
+  <ng-container *ngIf="!showSet">
+    <ul>
+      <li *ngFor="let q of questions">
+        <h3>{{ q.questionNumber }}. {{ q.title }}</h3>
+        <p><strong>- </strong> {{ q.knowledge }}</p>
+        <p><strong>- </strong> {{ q.understanding }}</p>
+        <p><strong>- </strong> {{ q.discussion }}</p>
+      </li>
+      <li *ngIf="questions.length===0">Brak pytań w tym bloku.</li>
+    </ul>
+  </ng-container>
+
+  <ng-container *ngIf="showSet">
+    <p>Data utworzenia: {{ setDetails?.createdAt | date:'short' }}</p>
+    <ul>
+      <li *ngFor="let q of setDetails?.questions">
+        <h3>Blok {{ q.examPart }}, pytanie {{ q.questionNumber }}: {{ q.title }}</h3>
+      <ul>
+        <p><strong>- Wiedza:</strong> {{ q.knowledge }}</p>
+        <p><strong>- Zrozumienie:</strong> {{ q.understanding }}</p>
+        <p><strong>- Dyskusja:</strong> {{ q.discussion }}</p>
+      </ul>
+      </li>
+      <li *ngIf="!setDetails?.questions?.length">Zestaw jest pusty.</li>
+    </ul>
+  </ng-container>
+    </section>
+  
+    <section class="panel grading-panel">
+    <table class="grading-table">
+      <thead>
+        <tr>
+          <th>Pyt.</th>
+          <th>Wiedza</th>
+          <th>Zrozumienie</th>
+          <th>Dyskusja</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of answers">
+          <td>{{ a.questionNumber }}</td>
+          <td><input type="checkbox" [(ngModel)]="a.knowledgeChecked" (ngModelChange)="onChange()"/></td>
+          <td><input type="checkbox" [(ngModel)]="a.understandingChecked" (ngModelChange)="onChange()"/></td>
+          <td><input type="checkbox" [(ngModel)]="a.discussionChecked" (ngModelChange)="onChange()"/></td>
+        </tr>
+      </tbody>
+    </table>
+
+      <div class="grading-actions">
+        <button
+          class="btn-primary"
+          (click)="submitOwnEvaluation()"
+          [disabled]="!selectedBlock || savedOwnEval"
+        >
+          {{ savedOwnEval ? 'Zapisano' : 'Zatwierdź ocenę' }}
+        </button>
+
+        <p class="submission-count">
+          Zatwierdzeń: {{ submissionCount }} / {{ expectedExaminers }}
+        </p>
+
+        <button
+          class="btn-primary"
+          (click)="evaluate()"
+          [disabled]="!canEvaluate()"
+        >
+          Oceń blok
+        </button>
+
+        <button class="btn-end" (click)="endExam()">
+          Zakończ egzamin
+        </button>
+      </div>
+    <div *ngIf="result">
+      <h3>Wynik:</h3>
+      <p>Wiedza: {{result.knowledgeCount}}/3</p>
+      <p>Zrozumienie: {{result.understandingCount}}/3</p>
+      <p>Dyskusja: {{result.discussionCount}}/3</p>
+      <p>Ocena: {{result.grade}} – {{result.passed ? 'ZALICZONE' : 'NIE ZALICZONE'}}</p>
+    </div>
+    </section>
+  
+    <section class="panel codes-panel">
+      <h2>Kody dostępu</h2>
+      <div class="code-group">
+        <span class="label">Kod studenta:</span>
+        <span class="code-badge student">
+          {{ codes?.studentCode || '-' }}
+        </span>
+      </div>
+      <div class="code-group">
+        <span class="label">Kody egzaminatorów:</span>
+        <div class="examiner-codes">
+          <span
+            *ngFor="let c of (codes?.examinerCodes || [])"
+            class="code-badge examiner"
+          >{{ c }}</span>
+          <span *ngIf="!(codes?.examinerCodes?.length)" class="placeholder" class="code-badge examiner">-</span>
+        </div>
+      </div>
+    </section>
+  
+    <section class="panel admin-actions">
+      <label>Zestaw:
+        <select [(ngModel)]="selectedSet" (change)="onSetChange()">
+          <option [ngValue]="null">-- nie wybrano --</option>
+          <option *ngFor="let s of questionSets" [value]="s.id">{{s.name}}</option>
+        </select>
+      </label>
+      <label>Blok:
+        <select [(ngModel)]="selectedBlock" [disabled]="!blocks.length">
+          <option [ngValue]="null">-- nie wybrano --</option>
+          <option *ngFor="let b of blocks" [value]="b">Blok {{b}}</option>
+        </select>
+      </label>
+      <button (click)="generate()" [disabled]="!selectedBlock">Generuj pytania</button>
+  
+      <label>
+        Egzaminatorzy:
+        <input type="number" [(ngModel)]="examinersCount" min="0" />
+      </label>
+      <button (click)="generateCodes()">
+        Generuj kody dostępu
+      </button>
+
+      <label>
+        Nazwa zestawu:
+        <input [(ngModel)]="newSetName" placeholder="np. Informatyka" />
+      </label>
+
+      <label>
+        Wybierz plik .txt:
+        <input type="file" (change)="onFileSelected($event)" />
+      </label>
+
+      <button (click)="onUpload()" [disabled]="!newSetName.trim() || !selectedFile">
+        Prześlij zestaw
+      </button>
+
+      <p *ngIf="uploadResponse">{{ uploadResponse }}</p>
+
+      <label>
+        Zestaw:
+        <select [(ngModel)]="selectedSet" (change)="onSetChange()">
+          <option [ngValue]="null">-- nie wybrano --</option>
+          <option *ngFor="let s of questionSets" [ngValue]="s.id">
+            {{ s.name }}
+          </option>
+        </select>
+      </label>
+      <button (click)="showSetDetails()" [disabled]="!selectedSet">
+        Wyświetl zestaw
+      </button>
+      <button (click)="onDeleteSet()" [disabled]="!selectedSet">
+        Usuń zestaw
+      </button>
+    </section>
+  </div>
+  

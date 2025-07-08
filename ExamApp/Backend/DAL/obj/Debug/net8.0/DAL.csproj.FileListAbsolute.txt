@@ -1,0 +1,17 @@
+D:\ExamApp\Backend\DAL\bin\Debug\net8.0\DAL.deps.json
+D:\ExamApp\Backend\DAL\bin\Debug\net8.0\DAL.runtimeconfig.json
+D:\ExamApp\Backend\DAL\bin\Debug\net8.0\DAL.dll
+D:\ExamApp\Backend\DAL\bin\Debug\net8.0\DAL.pdb
+D:\ExamApp\Backend\DAL\bin\Debug\net8.0\Model.dll
+D:\ExamApp\Backend\DAL\bin\Debug\net8.0\Model.pdb
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.csproj.AssemblyReference.cache
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.AssemblyInfoInputs.cache
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.AssemblyInfo.cs
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.csproj.CoreCompileInputs.cache
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.csproj.Up2Date
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.dll
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\refint\DAL.dll
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.pdb
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\DAL.genruntimeconfig.cache
+D:\ExamApp\Backend\DAL\obj\Debug\net8.0\ref\DAL.dll

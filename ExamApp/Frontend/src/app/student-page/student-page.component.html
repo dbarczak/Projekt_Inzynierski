@@ -1,0 +1,30 @@
+<div class="student-container">
+  <section class="panel questions-panel">
+    <h2>Pytania</h2>
+    <ul>
+      <li *ngFor="let q of questions">
+        <h3>{{q.questionNumber}}. {{q.title}}</h3>
+        <p>Proszę:</p>
+        <p><strong>-</strong> {{q.knowledge}}</p>
+        <p><strong>-</strong> {{q.understanding}}</p>
+        <p><strong>-</strong> {{q.discussion}}</p>
+      </li>
+      <li *ngIf="questions.length===0">Oczekiwanie na pytania…</li>
+    </ul>
+  </section>
+
+  <section class="panel result-panel">
+    <h2>Wynik:</h2>
+    <ng-container *ngIf="result; else noResult">
+      <p>Wiedza: {{result.knowledgeCount}}/3</p>
+      <p>Zrozumienie: {{result.understandingCount}}/3</p>
+      <p>Dyskusja: {{result.discussionCount}}/3</p>
+      <p>Ocena: {{result.grade}} &mdash; 
+         {{ result.passed ? 'ZALICZONE' : 'NIE ZALICZONE' }}
+      </p>
+    </ng-container>
+    <ng-template #noResult>
+      <p>Brak oceny</p>
+    </ng-template>
+  </section>
+</div>

@@ -1,0 +1,29 @@
+<div class="login-container">
+  <h1>Aplikacja wspomagająca przeprowadzanie egzaminów komisyjnych zdalnie</h1>
+
+  <div class="login-forms">
+    <!-- 1. Logowanie admina -->
+    <form [formGroup]="adminForm" (ngSubmit)="onAdminLogin()" class="login-form">
+      <label class="field">
+        <span>Login</span>
+        <input formControlName="username" placeholder="wpisz login" />
+      </label>
+      <label class="field">
+        <span>Hasło</span>
+        <input type="password" formControlName="password" placeholder="wpisz hasło" />
+      </label>
+      <button type="submit" [disabled]="adminForm.invalid">Zaloguj</button>
+    </form>
+
+    <!-- 2. Logowanie kodem -->
+    <form [formGroup]="codeForm" (ngSubmit)="onCodeLogin()" class="login-form">
+      <label class="field">
+        <span>Kod dostępu</span>
+        <input formControlName="code" placeholder="000000" maxlength="6" />
+      </label>
+      <button type="submit" [disabled]="codeForm.invalid">Wejdź</button>
+    </form>
+  </div>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+</div>
